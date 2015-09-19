@@ -1,0 +1,34 @@
+In our example, we pick the situation $m = 2$.
+We have the following input: $5, 5, 10$.
+
+\begin{table}[H]
+	\centering
+	\begin{subtable}[b]{0.45\textwidth}
+		\centering
+		\begin{tabular}{c c}
+			$m_1$& $m_2$\\\hline
+			5& 5\\
+			10& \\
+		\end{tabular}
+		\caption{\textsc{Alg} for this input}
+		\label{tab:set1:ex1:alg}
+	\end{subtable}
+	~
+	\begin{subtable}[b]{0.45\textwidth}
+		\centering
+		\begin{tabular}{c c}
+			$m_1$& $m_2$\\\hline
+			5& 10\\
+			5& \\
+		\end{tabular}
+		\caption{\textsc{Opt} for this input}
+		\label{tab:set1:ex1:opt}
+	\end{subtable}
+	\caption{\textsc{Alg} and \textsc{Opt} for the given input}
+	\label{tab:set1:ex1}
+\end{table}
+
+Table~\ref{tab:set1:ex1} shows how \textsc{Alg} and \textsc{Opt} solve the problem for this input.
+The makespan of \textsc{Alg} is 15, while the makespan of \textsc{Opt} is 10.
+
+Thus, $\frac{\textsc{Alg}}{\textsc{Opt}} = 1.5 = (2 - \frac{1}{m})$.
