@@ -1,5 +1,9 @@
 \begin{enumerate}[(i)]
-	\item
+	\item The size of both the approximation and the optimal solution is dependent on the spread of the $n$ points. When the points are spread over $m$ squares in the grid, the size of the approximation $ALG = m$. If the points are spread out far enough $OPT$ will also be $m$ but it is possible that the points are positioned in the corners of 4 adjacent squares such that $OPT = \frac{m}{4}$. Therefor $\rho \geq 4$. 
+
+One unit square in the optimal solution can at most cover the points from 4 unit squares in the approximation by positioning it over an intersection of the grid lines. Therefor $OPT$ can never be more than 4 times better than $ALG$ and $\rho \leq 4$.  
+
+We can conclude that the presented algorithm is a 4-approximation.
 	\item
 	\item
 \end{enumerate}
