@@ -1,0 +1,26 @@
+We know that $m = 10$, $1 \leq t_i \leq 20$ for $1 \leq i \leq n$ and $\sum_{i=1}^n{t_i} \leq 1000$.
+
+This allows us to more clearly define the LB.
+From the lemma given in the lecture, we know:
+
+\[
+	LB = \max{\left(\frac{1}{m} \sum_{j=1}^n{t_j}, \max_j{t_j} \right)}
+\]
+
+Since $\sum_{i=1}^n{t_i} \leq 1000$, we have that $\frac{1}{m}\sum_{i=1}^n{t_i} \leq \frac{1000}{m}$.
+Using this and the fact that job sizes are always $\leq 20$, we can see that:
+
+\[
+	LB = \max{\left(100, 20\right)} = 100
+\]
+
+\paragraph{Theorem} \textsc{GreedyScheduling} for the given configuration is a $1 \frac{9}{50}$-approximation
+
+\paragraph{Proof} Define $m_{i^*}$ as the machine with maximum load. $j^*$ is the last job put on $m_{i^*}$.
+$T'(i)$ = load of $m_i$ before job $j^*$ was added.
+Makespan = $T(i^*) = T'(i^*) + t_{j^*}$.
+
+From the lecture:
+$T'(i^*) \leq \frac{1}{m} \left( \sum_{j=1}^n{t_j} - t_{j^*} \right) \leq LB - \frac{1}{m} t_{j^*} \leq LB - 2 \leq LB - \frac{2}{100} LB$.
+
+$T(i^*) \leq LB - \frac{2}{100} LB + \frac{1}{5} LB \leq 1 \frac{9}{50} LB \leq 1 \frac{9}{50} OPT$.
