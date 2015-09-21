@@ -27,5 +27,37 @@
 		\end{equation}
 
 		So, the given algorithm is a $\frac{n-1}{2}$-approximation.
-	\item
+	\item The algorithm below uses the same priciples as \textsc{Approx-Vertex-Cover} which was treated in the lecture.
+        It assumes the CNF formula is represented as $F=(V,C)$, where $V$ is the set of variables and $C$ is the set of clauses in the formula.
+
+\begin{sourcecode}
+\algorithm{Approx-3-CNF($F=(V,C)$)}
+\comment{$T$ is the set of variables to set to true}
+$T = \emptyset$
+\comment{$C^*$ is the set of clauses that does not contain one or more variables that are in $T$}
+$C^* = C$
+\while{$C^* \neq \emptyset$}
+	Take a clause $(a, b, c)$ in $C*$
+	$T = T \cup \{a, b, c\}$
+	Remove all clauses that contain one or more of $a$, $b$ or $c$ from $C^*$
+|
+\return{$T$}
+\qend
+\end{sourcecode}
+
+		Two clauses are non-overlapping if they don't have any variables in common.\\%Yeah yeah, I know.
+		\\
+		Let $N \subseteq C$ be any set of non-overlapping edges. Then OPT $\geq N$.\\
+		\\
+		Consider any input formula $F$.
+
+		Let $N$ be the set of clauses selected in step 6 of the algorithm.
+
+		$N$ is a set of non-overlapping clauses, so OPT($F$) $\geq |N|$.
+
+		$|T| = 3|N|$.
+
+		Hence, $\textnormal{ALG}(F) = |T| = 3|N| \leq 3 \textnormal{OPT}(F)$.\\
+		\\
+		So \textsc{Approx-3-CNF} is a 3-approximation for 3-CNF.
 \end{enumerate}
