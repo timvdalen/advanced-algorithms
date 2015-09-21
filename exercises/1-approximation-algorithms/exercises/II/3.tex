@@ -18,10 +18,55 @@
 
 		\linprog{\sum_{v_i \in V} c_i}
 			{c_i \in \left\{0, 1\right\}}    {\eqnlimit[1]{i}[n]}
-			{\sum_{v \in e}{v} \geq 2}    {\text{for all }e \in E}
+			{\sum_{v \in e}{c_v} \geq 2}    {\text{for all }e \in E}
 			{eq:prog:cover}
 
 		Since this is an $0/1$-LP, the constraint (\ref{eq:prog:cover-3}) ensures that there are at least 2 vertices in $C$ per edge.
-	\item
+	\item To give an approximation for the problem, we first convert the program to a normal LP, that is, we change constraint (\ref{eq:prog:cover-2}) to:
+		\[
+			c_i \in \left\{r \in \mathbb{R}: 0 \leq r \leq 1\right\}, \eqnlimit[1]{i}[n]
+		\]
+
+		Let $T$ denote the value of an optimal solution to the relaxed linear problem described above, and let \textsc{OPT} denote the minimum number of vertices in a vertex cover.
+		Any vertex cover corresponds to a feasible solution of the linear program, by setting the variables of the vertices in the cover to 1 and the other variables to 0.
+		Hence, the optimal solution of the linear program is at least as good as this solution.
+		Thus, $\textsc{OPT} \geq T$.
+
+		Then we perform rounding on the resulting LP; variables whose value is at least $\frac{1}{d-2}$ are rounded to 1, variables whose value is less than $\frac{1}{d-2}$ are rounded to 0.
+		We thus obtain the following algorithm for \textsc{VertexCover}.
+
+		\begin{sourcecode}
+\algorithm{ApproxVertexCover($G=(V,E)$)}
+$G$ is a $d$-hypergraph
+Solve the relaxed linear program corresponding to the given problem: \linprog{\sum_{v_i \in V} c_i}{c_i \in \left\{r \in \mathbb{R}: 0 \leq r \leq 1\right\}}{\eqnlimit[1]{i}[n]}{\sum_{v \in e}{c_v} \geq 2}{\text{for all }e \in E}{eq:prog:cover-relaxed}
+$C = \left\{v_i \in V: c_i \geq \frac{1}{d-2}\right\}$
+\return{$C$}
+\qend
+		\end{sourcecode}
+
+		We first argue that the set $C$ returned by the algorithm is a vertex cover.
+		This proof is similar to \textbf{Theorem~2.4} in the course notes.
+
+		Consider an edge $e = (v_1, v_2, \ldots, v_d) \in E$.
+		Then, $\sum_{v \in e}{c_v} \geq 2$ is one of the constraints of the linear program.
+		A solution will be reported, since the program is obviously feasible by setting all variables to 1.
+
+		Say $\sum_{1}^{\#e - 2}{c_v} < \frac{1}{d-2}$.
+		Then, by (\ref{eq:prog:cover-relaxed-3}), $\sum_{v \in e}{c_v} \geq 2$.
+		By (\ref{eq:prog:cover-relaxed-3}), $\sum_{\#e - 2}^{\#e}{c_v} \leq 1$.
+		Thus, this can not be a solution reported by the relaxed LP.
+
+		The reported solution has at least two vertices $\geq \frac{1}{d-2}$.
+		It follows that at least two literals will be put into $C$.
+
+		Let $T$ be $\sum_{v_i \in V} c_i$ be the optimal solution to the relaxed linear program.
+		We have $\textsc{OPT} \geq T$.
+		Using that $c_i \geq \frac{1}{d-2}$ for all $v_i \in C$, we can now bound the optimal solution as follows:
+
+		\[
+			\sum_{v_i \in C} c_i \geq \sum_{v_i \in C} d-2 c_i \geq d-2 \sum_{v_i \in C} c_i \geq \sum_{v_i \in V} c_i = (d-2)T \geq d-2 \textsc{OPT}
+		\]
+
+		Thus, \textsc{ApproxVertexCover} is a $d-2$-approxmiation for \textsc{VertexCover}.
 	\item
 \end{enumerate}
