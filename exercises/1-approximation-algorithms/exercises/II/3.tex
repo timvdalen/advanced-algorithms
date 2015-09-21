@@ -68,5 +68,17 @@ $C = \left\{v_i \in V: c_i \geq \frac{1}{d-2}\right\}$
 		\]
 
 		Thus, \textsc{ApproxDoubleVertexCover} is a $d-1$-approxmiation for \textsc{DoubleVertexCover}.
-	\item
+	\item Since we are working with $d=3$, we note that \textsc{ApproxDoubleVertexCover} uses $\frac{1}{2}$ as a rounding factor.
+		Consider a complete $n$-3-hypergraph, that is, a 3-hypergraph with $n$ edges.
+
+		In the 0/1-LP case, OPT puts $n-2$ vertices in the cover.
+		In the relaxed LP, it's possible to only put $\frac{n}{3}$ vertices in the cover.
+
+		So, the integrality gap is:
+
+		\[
+			\frac{n-2}{\frac{n}{3}} = 3 - \frac{6}{n}
+		\]
+
+		Which means that as long as we have $n > 3$ (which we can assume, otherwise a double vertex cover in a 3-hypergraph does not make sense), we have that the integrality gap is $>1$.
 \end{enumerate}
