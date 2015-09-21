@@ -1,0 +1,31 @@
+\begin{enumerate}[(i)]
+	\item In the best case, the same literal shows up in all clauses.
+		Thus, we have
+		\[
+		OPT \geq 1
+		\]
+		as the lower bound.
+
+		Consider the following CNF with $m$ clauses
+		\[
+			(x_1 \lor x_2 \lor x_3) \land (x_4 \lor x_5 \lor x_3) \land (x_6 \lor x_7 \lor x_3) \land \ldots \land (x_{2m} \lor x_{2m+1} \lor x_3)
+		\]
+
+		Then, the algorithm could pick the $x_1, x_4, x_6, \ldots, x_{2m}$, $m$ literals.
+		Note that we have $2m + 1$ variables, so $n = 2m + 1$.
+		This is the worst case possible because since no literals can be negated, picking one literal from each clause and setting it to true will always result in true.
+
+		Take $T$ to be the number of literals set to true by the algorithm.
+		Then,
+		\begin{equation}
+		\begin{split}
+			T & \leq m  \\
+				& \leq \frac{n-1}{2}\\
+				& \leq \frac{n-1}{2} * LB \\
+				& \leq \frac{n-1}{2} * OPT
+		\end{split}
+		\end{equation}
+
+		So, the given algorithm is a $\frac{n-1}{2}$-approximation.
+	\item
+\end{enumerate}
