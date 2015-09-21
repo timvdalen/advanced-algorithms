@@ -1,0 +1,27 @@
+\begin{enumerate}[(i)]
+	\item Let $C$ be the set of vertices returned by the algorithm, that is, a set of vertices that form a minimum-size vertex cover.
+		Define $c_i$ for each $v_i \in V$ as follows:
+
+		\[
+			c_i =
+				\begin{cases}
+					1   & \text{if } v_i \in C\\
+					0   & \text{otherwise}
+				\end{cases}
+		\]
+
+		We want to minimize the number of vertices in the output set, thus, we want to minimize $\sum_{v_i \in V} c_i$.
+
+		We add the constraint that for every $d$-edge, there should be at least 2 vertices in $C$.
+
+		The linear program follows:
+
+		\linprog{\sum_{v_i \in V} c_i}
+			{c_i \in \left\{0, 1\right\}}    {\eqnlimit[1]{i}[n]}
+			{\sum_{v \in e}{v} \geq 2}    {\text{for all }e \in E}
+			{eq:prog:cover}
+
+		Since this is an $0/1$-LP, the constraint (\ref{eq:prog:cover-3}) ensures that there are at least 2 vertices in $C$ per edge.
+	\item
+	\item
+\end{enumerate}
