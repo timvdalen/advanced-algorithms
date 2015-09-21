@@ -1,0 +1,8 @@
+\begin{enumerate}[(i)]
+	\item If $C$ is a vertex cover of $G$ then every edge should be covered by $C$, therefor there can be no edge $(x,y)$ connecting two vertices in $V \setminus C$ because neither of the vertices would be contained in $C$ (as $v \in V \setminus C \implies v \not \in C$), the edge would not be covered by C which is contradictory. Thus $V \setminus C$ is an independent set if $C$ is a vertex cover of $G$.
+
+If $V \setminus C$ is an independent set of $G(V,E)$, whenever an edge $(x,y) \in E$ exists with $x \in V \setminus C$ then $y \not \in V \setminus C$, $y$ must be in the complement of $V \setminus C$ because $y \in V$ so $y \in C$, which means the edge is covered by $C$. When an edge $x,y \in E$ exists with $x \in C$ it is obviously also covered by $C$. So all edges originating from nodes in $V \setminus C \cup C = V$ are covered, i.e. all edges are covered by $C$. Thus $C$ is a vertex cover of $G$ if $V \setminus C$ is an independent set of $G$.
+
+We can conclude that $C$ is a vertex cover of $G$ if and only if $V \setminus C$ is an independent set of $G$.
+	\item
+\end{enumerate}
