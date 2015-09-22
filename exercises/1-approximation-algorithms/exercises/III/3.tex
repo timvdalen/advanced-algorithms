@@ -1,0 +1,36 @@
+\begin{enumerate}[(i)]
+	\item We assume \textsc{Alg}$(G, \epsilon)$ is an FPTAS that computes a $(1 - \epsilon)$-approximation for \textsc{MaximumIndependentSet} on a graph $G$.
+		We want to use this algorithm to compute an exact answer, which means that the error $\epsilon$ should be so small that $(1 - \epsilon) \text{OPT} > \text{OPT} - 1$, better than the optimal solution - 1.
+
+		\begin{equation}
+		\begin{split}
+			(1 - \epsilon) \text{OPT} &> \text{OPT} - 1\\
+			\text{OPT} - \epsilon \text{OPT} &> \text{OPT} - 1\\
+			- \epsilon \text{OPT}& > -1\\
+			\epsilon \text{OPT} &< 1\\
+		\end{split}
+		\end{equation}
+
+		We know that $|V|$ is an upper bound for OPT.
+		$1 \leq OPT \leq |V|$.
+
+		It follows that if we pick $\frac{1}{|V|+1}$ for $\epsilon$, our FPTAS will always give the optimal solution.
+		Thus, the algorithm is as follows:
+
+\begin{sourcecode}
+\algorithm{ExactMaximumIndependentSetPolynomial($G=(V,E)$)}
+\return \textsc{Alg}$(G, \frac{1}{|V| + 1})$
+\qend
+\end{sourcecode}
+
+		We derived an exact algorithm for \textsc{Maximum Independent Set} that runs in polynomial time using an (any, unspecified) FPTAS.
+		\textsc{MaximumIndependentSet} is NP-hard, so there cannot exist an exact algorithm that runs in polynomial time.
+		Since the existence of an FPTAS for this problem leads to an exact solution that runs in polynomial time, such an FTPAS can not exist (unless P=NP).
+
+	\item No, the proof in (i) only implies that there is no FPTAS for \textsc{Maximum Independent Set} unless P=NP.
+
+		We only reach a contradiction in the proof in (i) because the running time is polynomial.
+		However, in a PTAS, the running time could be non-polynomial, for instance if $\epsilon$ is in a power.
+
+		Thus, there could still be a general PTAS, in which $\epsilon$ is not polynomial.
+\end{enumerate}
