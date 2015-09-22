@@ -1,0 +1,18 @@
+graph g{
+	layout=circo;
+	
+	node [shape=circle,label=""];
+
+	a;
+	b [style=filled];
+	c;
+	d [style=filled];
+	e;
+	
+	a -- b;
+	b -- c;
+	c -- d;
+	d -- a;
+	d -- e;
+	b -- d;
+}

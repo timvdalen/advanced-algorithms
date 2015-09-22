@@ -4,10 +4,18 @@ DOC = report
 
 all: once.a
 
-once.%:
+.SECONDARY:
+
+exercises/II/%.eps: exercises/II/%.dot
+	dot $< -Teps -o $@
+
+cleandot:
+	rm -f exercises/II/*.eps exercises/II/*-eps-converted-to.pdf
+
+once.%: $(patsubst %,exercises/II/%.eps, 1-opt-cover 1-alg-cover 1-opt-independent 1-alg-independent)
 	$(LATEX) $(LATEXOPTS) $(DOC)
 
-clean:
+clean: cleandot
 	rm -f $(DOC).{aux,log,toc,out,bbl,blg}
 
 remove: clean
