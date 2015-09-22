@@ -4,7 +4,7 @@
 If $V \setminus C$ is an independent set of $G(V,E)$, whenever an edge $(x,y) \in E$ exists with $x \in V \setminus C$ then $y \not \in V \setminus C$, $y$ must be in the complement of $V \setminus C$ because $y \in V$ so $y \in C$, which means the edge is covered by $C$. When an edge $x,y \in E$ exists with $x \in C$ it is obviously also covered by $C$. So all edges originating from nodes in $V \setminus C \cup C = V$ are covered, i.e. all edges are covered by $C$. Thus $C$ is a vertex cover of $G$ if $V \setminus C$ is an independent set of $G$.
 
 We can conclude that $C$ is a vertex cover of $G$ if and only if $V \setminus C$ is an independent set of $G$.
-	\item
+	\item Consider the graph shown in Figure~\ref{fig:set2:ex1}. The optimal vertex cover consists of $2$ vertices, because \emph{ApproxMinVertexCover} is a 2-approximation algorithm it might present an approximate solution to the \textsc{MinVertexCover} problem that is twice as large. If this solution would be used by \emph{ApproxMaxIndependentSet}, it would find an independent set of size $1$. The maximum independent set is however size $3$. Therefor \emph{ApproxMaxIndependentSet}'s approximation ratio $\eta \geq 3/1 = 3 \not \leq 2$ and we can conclude that it is not a 2-approximation algorithm.
 		\begin{figure}[H]
 			\centering
 			\begin{subfigure}[b]{0.45\textwidth}
