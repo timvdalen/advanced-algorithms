@@ -4,6 +4,28 @@
 One unit square in the optimal solution can at most cover the points from 4 unit squares in the approximation by positioning it over an intersection of the grid lines. Therefor $OPT$ can never be more than 4 times better than $ALG$ and $\rho \leq 4$.  
 
 We can conclude that the presented algorithm is a 4-approximation.
-	\item
+	\item With the given limitations, the problem now becomes only one dimensional.
+		We can ignore the $y$ component of the coordinate, because if we make sure that the $y$ coordinates of the unit squares are always $k$ and $k+1$, all possible values of $y$ are covered.
+		Thus, we only need to focus on the $x$ coordinate placement of the unit squares.
+		The problem is much easier now that we only have one dimension, and we can use a greedy approach.
+
+\begin{sourcecode}
+\algorithm{GreedyMinimumLineCover($P$)}
+$S = \emptyset$
+\for{$p \in P$} \runningtime{$O(n) *$}
+	\qif{$p$ is not covered by $S$} \runningtime{$O(\log{n})$}
+		$S = S \cup (p_x, p_x + 1)$
+	|
+|
+\return{$S$}
+\end{sourcecode}
+		\paragraph{Running time} Step 3 of the algorithm takes $O(\log{n})$ time to check if $p$ is yet covered.
+			This step is executed for each of the points, so the algorithm takes $O(n \log{n})$ time.
+
+		\paragraph{Correctness} It is easy to see that the greedy approach will result in the minimum solution to the line cover.
+			Assume we have an input for which the greedy approach does not give the optimal result.
+			Then, there must be two points in the input that are close enough to each other to be covered by the same line, but are not.
+			Since the algorithms checks this before inserting a line, this input can not exist.
+			Therefore, the algorithm is correct.
 	\item
 \end{enumerate}
