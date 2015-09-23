@@ -1,5 +1,17 @@
 \begin{enumerate}[(i)]
 	\item
 	\item
-	\item
+	\item The algorithm runs in $O(nP^*)$ time.
+		Using our $\Delta$, we can obtain a value for $P^*$ in terms of $\varepsilon$ and $n$.
+
+		\begin{align}
+			p^*_x &= \ceil{\frac{p_x}{\Delta}}\\
+			      &\leq \ldots\\
+			      &\leq \ceil{\dots}
+		\end{align}
+
+		Similarly, $p^*_y \leq \ceil{\ldots}$.
+
+		Thus, $P^* = O(\ldots)$, and $O(nP^*) = O(n\ldots)$.
+		So, the algorithms is a PTAS.
 \end{enumerate}
