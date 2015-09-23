@@ -1,7 +1,7 @@
 \begin{enumerate}[(i)]
-	\item The size of both the approximation and the optimal solution is dependent on the spread of the $n$ points. When the points are spread over $m$ squares in the grid, the size of the approximation $ALG = m$. If the points are spread out far enough $OPT$ will also be $m$ but it is possible that the points are positioned in the corners of 4 adjacent squares such that $OPT = \frac{m}{4}$. Therefor $\rho \geq 4$. 
+	\item The size of both the approximation and the optimal solution is dependent on the spread of the $n$ points. When the points are spread over $m$ squares in the grid, the size of the approximation $ALG = m$. If the points are spread out far enough $OPT$ will also be $m$ but it is possible that the points are positioned in the corners of 4 adjacent squares such that $OPT = \frac{m}{4}$. Therefore $\rho \geq 4$.
 
-One unit square in the optimal solution can at most cover the points from 4 unit squares in the approximation by positioning it over an intersection of the grid lines. Therefor $OPT$ can never be more than 4 times better than $ALG$ and $\rho \leq 4$.  
+One unit square in the optimal solution can at most cover the points from 4 unit squares in the approximation by positioning it over an intersection of the grid lines. Therefore $OPT$ can never be more than 4 times better than $ALG$ and $\rho \leq 4$.
 
 We can conclude that the presented algorithm is a 4-approximation.
 	\item With the given limitations, the problem now becomes only one dimensional.
@@ -18,6 +18,7 @@ $S = \emptyset$
 	|
 |
 \return{$S$}
+\qend
 \end{sourcecode}
 		\paragraph{Running time} Step 3 of the algorithm takes $O(\log{n})$ time to check if $p$ is yet covered.
 			This step is executed for each of the points, so the algorithm takes $O(n \log{n})$ time.
@@ -27,5 +28,33 @@ $S = \emptyset$
 			Then, there must be two points in the input that are close enough to each other to be covered by the same line, but are not.
 			Since the algorithms checks this before inserting a line, this input can not exist.
 			Therefore, the algorithm is correct.
-	\item
+	\item Our algorithm works by simply running the (exact) algorithm for the one dimensional case row by row.
+		We modify the algorithm a little bit, to produce squares instead of lines.
+
+\begin{sourcecode}
+\algorithm{GreedyMinimumSquareLineCover($P, k$)}
+$S = \emptyset$
+\for{$p \in P$}
+	\qif{$p$ is not covered by $S$}
+		$S = S \cup (p_x, k, p_x + 1, k + 1)$
+	|
+|
+\return{$S$}
+\qend
+\algorithm{ApproxSquareCover($P$)}
+$S = \emptyset$
+Group $P$ by $y$ coordinate, the resulting set is $B$
+\for{$(Q, k) \in B$}
+	$S = S \cup $ \textsc{GreedyMinimumSquareLineCover}($Q, k$)
+|
+\return{$S$}
+\qend
+\end{sourcecode}
+
+		\paragraph{Correctness} We know that \textsc{GreedyMinimumSquareLineCover} covers all the points in a given 'row'.
+			Because we run \textsc{GreedyMinimumSquareLineCover} for every row that has a point in it, the union of these squares must cover all points.
+			Thus, the algorithm produces a valid result.
+
+		\paragraph{Approximation ratio} Going back to the proof in (i), we can see that it is now only possible for the points to be positioned in the corners or 2 adjacent squares, in the $y$-direction, because the $x$-direction is already optimal.
+			From (i), it follows that \textsc{ApproxSquareCover} is a 2-approximation.
 \end{enumerate}
