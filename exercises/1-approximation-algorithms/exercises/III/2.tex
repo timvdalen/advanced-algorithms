@@ -20,13 +20,16 @@ $\Delta \leftarrow (\varepsilon / n) * UB$ where $UB \leftarrow \sum_{p \in P}{2
 		Using our $\Delta$, we can obtain a value for $P^*$ in terms of $\varepsilon$ and $n$.
 
 		\begin{align}
-			p^*_x &= \ceil{\frac{p_x}{\Delta}}\\
-			      &\leq \ldots\\
-			      &\leq \ceil{\dots}
+			p^*_x &= \ceil*{\frac{p_x}{\Delta}}\\
+			      &\leq \ceil*{\frac{p_x}{(\varepsilon / n) * UB}}\\
+				  &\leq \ceil*{\frac{p_x}{(\varepsilon / n) * \sum_{p \in P}{2 * \text{dist}(O, p)}}}\\
+			      &\leq \ceil*{\frac{p_x}{(\varepsilon / n) * n}}\\
+				  &\leq \ceil*{\frac{p_x}{\frac{n\varepsilon}{n}}}\\
+				  &\leq \ceil*{\frac{n * p_x}{n\varepsilon}}
 		\end{align}
 
-		Similarly, $p^*_y \leq \ceil{\ldots}$.
+		Similarly, $p^*_y \leq \ceil*{\frac{n * p_y}{n\varepsilon}}$.
 
-		Thus, $P^* = O(\ldots)$, and $O(nP^*) = O(n\ldots)$.
+		Thus, $P^* = O\left(\frac{n^2}{n\varepsilon}\right)$, and $O(nP^*) = O\left(\frac{n^3}{n\varepsilon}\right)$.
 		So, the algorithms is a PTAS.
 \end{enumerate}
