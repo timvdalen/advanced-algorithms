@@ -1,18 +1,22 @@
 \begin{enumerate}[(i)]
-	\item A suitable value for $\Delta$ can be derived as follows
+	\item A suitable value for $\Delta$ can be derived as follows. Let $E$ be the set of all routes or edges between cities.
 
 \begin{sourcecode}
-\algorithm{PTAS-TSP}
 $\Delta \leftarrow (\varepsilon / n) * UB$ where $UB \leftarrow \sum_{p \in P}{2 * \text{dist}(O, p)}$ \comment{Since Travelling from one point to another will allways add a shorter distance to the path than travelling to the point via the origin $O$.}
 \end{sourcecode}
 
-	\item Prove $\textit{length}(T^*) \leq (1 + \varepsilon) * \textit{length}(T_{\textsc{OPT}})$
+	\item Prove $\textit{length}(T^*) \leq (1 + \varepsilon) * \textit{length}(T_{\textsc{OPT}})$ We can express $\textit{length}(T)$ as a sum of weights associated with edges between the points. The weight of edge $e(x,y)$ is $\text{dist}(e) = \text{dist}(x,y)$. Because of the rounding, values $\text{dist}^*(e)$ used in the PTAS can be at most $\sqrt{\Delta^2 + \Delta^2} = \sqrt{2\Delta^2}$ greater than the actual distance of the edges. We will refer to the set of edges used in tour $T$ as $E_T$. Even if different edges get chosen than the optimal ones because of this difference then the resulting tour will not be longer than $\textsc{OPT} + n * \sqrt{2\Delta^2}$
 
 \begin{equation}
 \begin{split}
-\textit{length}(T^*)  &\leq \\
-&\leq \\
-&\leq (1 + \varepsilon) * \textit{length}(T_{\textsc{OPT}})
+\textit{length}(T_{\textsc{OPT}}) \leq \textit{length}(T^*)  &= \sum_{e \in E_{T^*}}{\text{dist}(e)} \\
+&\leq \textit{length}(T_{\textsc{OPT}}) + n * \sqrt{2\Delta^2} \\
+&\leq \textit{length}(T_{\textsc{OPT}}) + n * \sqrt{2 (\frac{\varepsilon}{n} * \sum_{p \in P}{2 * \text{dist}(O, p)})^2} \\
+&\leq \textit{length}(T_{\textsc{OPT}}) + \varepsilon * \sqrt{2} * \sum_{p \in P}{2 * \text{dist}(O, p)} \\
+&\leq \textit{length}(T_{\textsc{OPT}}) + \varepsilon * 2\sqrt{2} * \sum_{p \in P}{\text{dist}(O, p)} \\
+&\leq \textit{length}(T_{\textsc{OPT}}) + \varepsilon * \textsc{LB}\\
+&\leq \textit{length}(T_{\textsc{OPT}}) + \varepsilon * \textit{length}(T_{\textsc{OPT}}) \\
+&\leq (1 + \varepsilon) * \textit{length}(T_{\textsc{OPT}}) \\
 \end{split}
 \end{equation}
 
