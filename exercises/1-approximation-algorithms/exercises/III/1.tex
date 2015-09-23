@@ -1,6 +1,22 @@
 \begin{enumerate}[(i)]
-	\item Since the large jobs take at least $\epsilon * T$ if we want to know the maximum number of large jobs we need to see howmany jobs of exactly that size could be part of the total time $T$. 
-\[ \text{There are at most} \left \lfloor\frac{T}{\epsilon * T} \right \rfloor = \left \lfloor \frac{1}{\epsilon} \right \rfloor \text{large jobs} \] 
+	\item Since the large jobs take at least $\epsilon * T$ if we want to know the maximum number of large jobs we need to see howmany jobs of exactly that size could be part of the total time $T$ or if $n$ is smaller, that will be the maximum number of large jobs. 
+\[ \text{There are at most \hspace*{10pt}} \min{(n,\left \lfloor\frac{T}{\epsilon * T} \right \rfloor = \left \lfloor \frac{1}{\epsilon} \right \rfloor)} \text{\hspace*{10pt} large jobs} \] 
 If there are $m$ large jobs, these can be distributed $2^m$ ways over two machines.
 	\item 
+
+\begin{sourcecode}
+\algorithm{PTAS-LOADBALANCING}
+$\Delta \leftarrow \epsilon * UB$ where $UB \leftarrow T$ \comment{Because $OPT \leq T$}
+For each job $j$ define $t_j^* = \lceil t_j / \Delta \rceil$
+For the $m$ 'large' jobs where $t_j > \epsilon * T$ the rounded $t_j^*$ values will be used to determine the optimal solution with dynamic programming. \comment{this will increase the makespan at most $\frac{m}{n} * \Delta$ since each 'large' job's processing time is increased at most $\Delta$.}
+For the $n-m$ remaining 'small' jobs where $t_j < \epsilon * T$ assign machines greedily \comment{this will increase the makespan at most $\frac{n-m}{n} * \epsilon * T$ over the optimum.}
+\qend
+\end{sourcecode}
+
+\textsc{PTAS-LOADBALANCING} yields solutions where the makespan \\
+$M \leq UB + \frac{m}{n} * \Delta + \frac{n-m}{n} * \epsilon * T$\\
+$M \leq T + \frac{m}{n} * \epsilon * T + \frac{n-m}{n} * \epsilon * T$\\
+$M \leq T + \epsilon * T$\\
+$M \leq (1+\epsilon) * T$\\
+
 \end{enumerate}
