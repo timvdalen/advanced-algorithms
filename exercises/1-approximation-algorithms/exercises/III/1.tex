@@ -1,7 +1,8 @@
 \begin{enumerate}[(i)]
 	\item Since the large jobs take at least $\varepsilon * T$ if we want to know the maximum number of large jobs we need to see howmany jobs of exactly that size could be part of the total time $T$ or if $n$ is smaller, that will be the maximum number of large jobs. 
 \[ \text{There are at most \hspace*{10pt}} \min{(n,\left \lfloor\frac{T}{\varepsilon * T} \right \rfloor = \left \lfloor \frac{1}{\varepsilon} \right \rfloor)} \text{\hspace*{10pt} large jobs} \] 
-If there are $m$ large jobs, these can be distributed $2^m$ ways over two machines.
+
+If there are $m$ large jobs, these can be distributed $2^m$ ways over two machines. Because we can choose to have each job executed by either of the two machines.
 	\item Consider the following PTAS.
 
 \begin{sourcecode}
