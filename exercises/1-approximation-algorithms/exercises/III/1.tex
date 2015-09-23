@@ -2,21 +2,33 @@
 	\item Since the large jobs take at least $\varepsilon * T$ if we want to know the maximum number of large jobs we need to see howmany jobs of exactly that size could be part of the total time $T$ or if $n$ is smaller, that will be the maximum number of large jobs. 
 \[ \text{There are at most \hspace*{10pt}} \min{(n,\left \lfloor\frac{T}{\varepsilon * T} \right \rfloor = \left \lfloor \frac{1}{\varepsilon} \right \rfloor)} \text{\hspace*{10pt} large jobs} \] 
 If there are $m$ large jobs, these can be distributed $2^m$ ways over two machines.
-	\item 
+	\item Consider the following PTAS.
 
 \begin{sourcecode}
 \algorithm{PTAS-LoadBalancing}
 $\Delta \leftarrow (\varepsilon / n) * UB$ where $UB \leftarrow T$ \comment{Because $OPT \leq T$}
 For each job $j$ define $t_j^* = \lceil t_j / \Delta \rceil$
-For the $m$ 'large' jobs where $t_j > \varepsilon * T$ the rounded $t_j^*$ values will be used to determine the optimal solution with dynamic programming. \comment{this will increase the makespan at most $\frac{m}{n} * \Delta$ since each 'large' job's processing time is increased at most $\Delta$.}
-For the $n-m$ remaining 'small' jobs where $t_j < \varepsilon * T$ assign machines greedily \comment{this will increase the makespan at most $\frac{n-m}{n} * \varepsilon * T$ over the optimum.}
+For the $m$ 'large' jobs where $t_j > \varepsilon * T$ the rounded $t_j^*$ values will be used to determine the optimal solution with dynamic programming. \runningtime{$O(\frac{1}{\varepsilon}^2)$}
+\comment{this will increase the makespan at most $\frac{m}{n} * \Delta$ since each 'large' job's processing time is increased at most $\Delta$.}
+For the $n-m$ remaining 'small' jobs where $t_j < \varepsilon * T$ assign machines greedily \runningtime{$O(n \log{m})$}
+\comment{this will increase the makespan at most $\frac{n-m}{n} * \varepsilon * T$ over the optimum.}
 \qend
 \end{sourcecode}
 
-\textsc{PTAS-LoadBalancing} yields solutions where the makespan \\
-$M \leq UB + \frac{m}{n} * \Delta + \frac{n-m}{n} * \varepsilon * T$\\
-$M \leq T + \frac{m}{n} * (\varepsilon / n) * T + \frac{n-m}{n} * \varepsilon * T$\\
-$M \leq T + \frac{m}{n} * \varepsilon * T + \frac{n-m}{n} * \varepsilon * T$\\
-$M \leq T + \varepsilon * T$\\
-$M \leq (1+\varepsilon) * T$\\
+	\paragraph{Approximation ratio} \textsc{PTAS-LoadBalancing} yields solutions where the makespan:
+	\begin{align}
+		M &\leq UB + \frac{m}{n} * \Delta + \frac{n-m}{n} * \varepsilon * T\\
+		M &\leq T + \frac{m}{n} * (\varepsilon / n) * T + \frac{n-m}{n} * \varepsilon * T\\
+		M &\leq T + \frac{m}{n} * \varepsilon * T + \frac{n-m}{n} * \varepsilon * T\\
+		M &\leq T + \varepsilon * T\\
+		M &\leq (1+\varepsilon) * T\\
+	\end{align}
+
+	\paragraph{Running time} The PTAS uses two sub-routines.
+		The first one is a dynamic programming approach for the large jobs.
+		We can solve this with an algorithm that runs in $O(\frac{1}{\varepsilon}^2)$ time.
+		The second sub-routine, the greedy algorithm that solves the problem for the small jobs, runs in $O(n\log{m})$ time.
+		So, the algorithm runs in $O(\frac{1}{\varepsilon}^2 + n\log{m})$ time.
+
+	Thus, \textsc{PTAS-LoadBalancing} is a PTAS.
 \end{enumerate}
