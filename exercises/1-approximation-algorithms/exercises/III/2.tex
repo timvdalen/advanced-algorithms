@@ -1,6 +1,23 @@
 \begin{enumerate}[(i)]
-	\item
-	\item
+	\item A suitable value for $\Delta$ can be derived as follows
+
+\begin{sourcecode}
+\algorithm{PTAS-TSP}
+$\Delta \leftarrow (\varepsilon / n) * UB$ where $UB \leftarrow \sum_{p \in P}{2 * \text{dist}(O, p)}$ \comment{Since Travelling from one point to another will allways add a shorter distance to the path than travelling to the point via the origin $O$.}
+\end{sourcecode}
+
+	\item Prove $\textit{length}(T^*) \leq (1 + \varepsilon) * \textit{length}(T_{\textsc{OPT}})$
+
+$\textit{length}(T^*) 
+
+\begin{equation}
+\begin{split}
+\textit{length}(T^*)  &\leq \\
+&\leq \\
+&\leq (1 + \varepsilon) * \textit{length}(T_{\textsc{OPT}})
+\end{split}
+\end{equation}
+
 	\item The algorithm runs in $O(nP^*)$ time.
 		Using our $\Delta$, we can obtain a value for $P^*$ in terms of $\varepsilon$ and $n$.
 
