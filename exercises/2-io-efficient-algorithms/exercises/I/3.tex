@@ -1,5 +1,27 @@
 \begin{enumerate}[(i)]
-	\item
-	\item
-	\item
+	\item Recall that binary search works by taking the middle value of an array and comparing it to the query value.
+		If the two are equal, we report the value.
+		If the query value is smaller than this value, we recurse with the values left of the middle.
+		If the query value is bigger, we do the same for the right part.
+
+		Each time that we perform this recursion, we jump to a different part of the array, which means we need to perform an I/O.
+		This recursion is performed for each step in the binary tree, so $\log_2{n}$ times.
+
+		However, if we get to the lowest part of the tree without finding the query value, we encounter the situation where the next middle value is in the same block as the previous one.
+		The depth of the tree for which this can happen is $\log_2{B}$.
+
+		Thus, binary search on a sorted array $A$ of length $n$ takes $O(\log_2{n} - \log_2{B}) = O(\log_2{\frac{n}{B}})$.
+	\item The bad I/O-complexity is caused by the fact that we do jumps through the array to find the next midpoint.
+		However, we actually know a lot about the possible next value we need from the way binary search works.
+		Because we have this knowledge about the way the algorithm accesses data, we can order the array in a way that uses less I/O's.
+
+		Consider the binary search tree.
+		Instead of storing the nodes in travelsal order, we now store them in rank order.
+		This means that midpoints are closer together and will cause less I/O's.
+		Specifically, we can do $\log_2{B}$ recursive calls per block.
+
+		Due to the way we store the data, we lose the advantage of the last block (which is of course nothing compared to the improvement we made).
+		Thus, the I/O complexity is $O(\frac{\log_2{n}}{\log_2{B}}$.
+	\item \paragraph{Spatial locality} is improved. Since all middle values are closer together now, it is much more likely that the next value that we need is close.
+		\paragraph{Temporal locality} is unaffected. An item in binary search will never be used twice.
 \end{enumerate}
