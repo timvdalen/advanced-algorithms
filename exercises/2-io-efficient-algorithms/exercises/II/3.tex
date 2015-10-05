@@ -1,0 +1,5 @@
+The special-case sorting algorithms that can run in $O(n)$ time still need to move items to their correct position.
+The $O(Sort(n))$ I/O-bound comes from the permutation bound.
+
+As shown in \textbf{Theorem 6.2}, any permutation operation (assuming $n < B\sqrt{{M \choose B}}$, which is a mild assumption) requires $\Theta((n/B)\log_{M/B}{(n/B)})$ I/O's.
+Because any sorting algorithm still needs to perform a permutation, it is impossible to adapt a algorithm that can sort in $O(n)$ time to work in $O(n/B)$ I/O's.
