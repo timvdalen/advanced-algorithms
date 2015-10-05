@@ -1,0 +1,65 @@
+Our algorithm uses the same approach as the one that was presented for calculating maximal independent sets in the lecture.
+We use time-forward processing.
+
+The adjacency list that $\mathcal{G}$ is stored in is called $A$.
+
+We first turn $\mathcal{G}$ into a directed graph $\mathcal{G}^*$ by directing every edge $(v_i, v_j)$ from the node with smaller index to the node with higher index.
+Observe that $\mathcal{G}^*$ is a DAG - there cannot be cycles in $\mathcal{G}^*$.
+Moreover, the representation of $\mathcal{G}$ in fact corresponds to a representation for $\mathcal{G}^*$ in which the nodes are stored in topological order by definition.
+Thus, to abtain a suitable representation for $\mathcal{G}^*$ we do not have to do anything: we can just interpret the representation of $\mathcal{G}$ as a repsentation of $\mathcal{G}^*$ (if we ingore the "reverse edges" that $\mathcal{G}$ stores).
+
+We define $C$ to be a list of colors $c_i$, for $1 \leq i \leq d_{\textnormal{max}} + 1$.
+We define the local function $f(v_j)$, for each node $v_j$, to be the lowest $c_i$ for which holds that:
+
+\[
+	\forall\left[v_k \in E(v_j) | f(v_k) \not= c_i\right]
+\]
+
+Where $E(v_j)$ is the set of $v_j$'s in-neighbours.
+Since the list is one item longer than the maximum number of in-neighbours for any node, this function will always be defined.
+
+Function $f$ can be implemented as follows:
+
+\begin{sourcecode}
+\algorithm{CalculateF($v_j$)}
+\for{$i = 1; i \leq d_{\textnormal{max}} + 1; i += 1$}
+	valid = true
+	\for{$v_k \in E(v_j)$}
+		\qif{$f(v_k) == c_i$}
+			valid = false
+		|
+	|
+	\qif{valid}
+		\return $c_i$
+	|
+|
+\qend
+\end{sourcecode}
+
+Note that while this is a rather naive implementation with respect to I/O-complexity (switching the for loops would be much better), we show it here in the interest of readability.
+Because the algorithm below fetches the required $f$-values in advance, it does not introduce any problems.
+
+We arrive at the following time-forward algorithm to compute an assignment of colors for $\mathcal{G}$:
+
+\begin{sourcecode}
+\algorithm{TimeForward-DAG-Coloring($G$)}
+Initialize an array $F[0..n-1]$ and a min-priority queue $\mathcal{Q}$.
+\for{$i = 0; i \leq n - 1; i += 1$}
+	Perform $Extract-Min$ operations on $\mathcal{Q}$ as long as the extracted pairs have priority $i$. (This requires one more $Extract-Min$ than there are pairs with priority $i$. This extra pair, which has priority $i'$ for some $i' > i$, should be re-inserted into $\mathcal{Q}$.)
+	Compute $f(v_i)$ from the extracted $f-values$; set $F[i] = f(v_i)$.
+	\for{$j \in A[i].$OutNeighbours}
+		Insert the pair $(f(v_i), j)$ into $\mathcal{Q}$.
+	|
+|
+\qend
+\end{sourcecode}
+
+\paragraph{Correctness}
+	The set $\left\{v_i : (v_i, f(v_i))\right\}$ now gives a coloring for $\mathcal{G}$.
+	It is easy to see that this coloring is valid, as any node will have a different color than its in-neighbours.
+	Since this holds for all in-neighbours, and we traverse the graph in topological order, it follows that this also holds for out-neighbours.
+	Thus, the algorithm produces a valid coloring.
+
+\paragraph{I/O-complexity}
+	We only need to scan our in-neighbours once to compute the local function, so $f$ uses $O(Sort(1+|N_in(v_i)|))$ I/O's.
+	We refer to \textbf{Theorem~7.2} from the course notes, which holds because our function $f$ is a local function that runs in $O(Sort(1+|N_in(v_i)|))$ I/O's.
