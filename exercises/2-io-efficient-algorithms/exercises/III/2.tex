@@ -1,0 +1,25 @@
+if we sort the sequence of operations stable by value $x_i$ we can obtain a list $L$ where all operations that affect the result of a search operation (insertions and deletions) are grouped with that search operation. We can report whether a number $x_i$ is present in $S$ at the time of the search by running the following algorithm on the sorted list.
+\begin{sourcecode}
+\algorithm{ReportSearches($L$)}
+currentX = null;
+\for{$(type_i, x_i) \in L$}
+	\qif{$\text{currentX} <> x_i$}
+		currentX = $x_i$
+		c = 0;
+	|
+	\qif{$type_i == \textit{Search}$}
+		\qif{$c > 0$}
+			\textbf{print} $x_i$ is present in $S$ at the time of \textit{Search} $i$
+		\qelse
+			\textbf{print} $x_i$ is not present in $S$ at the time of \textit{Search} $i$
+		|
+	\qelse \qif{$type_i == \textit{Insert}$}
+		c++;
+	\qelse \qif{$type_i == \textit{Delete}$}
+		c--; 
+	|
+|
+\qend
+\end{sourcecode}
+
+The described algorithm could be easily modified to handle multisets where a number might be inserted multiple times. It takes $O(\textsc{Sort}(n))$ I/Os to sort the list and $O(\ceil{n/B})$ to process the resulting list of operations with \textsc{ReportSearches}. Overall the problem can thus be solved in $O(\textsc{Sort}(n))$ I/Os without using a buffer tree.
