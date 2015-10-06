@@ -1,6 +1,8 @@
 \begin{enumerate}[(i)]
 	\item
+This simple matrix-multiplication algorithm reads each element from $X$ once row-by-row, each element from $Y$ once collumn-by-collumn and writes a result once to each field in $Z$ row-by-row. To do this we require $\lceil n/B \rceil$ I/O's for accessing either of the row-by-row matrices and $n$ for reading the collumn-by-collumn matrix using \textsc{LRU} as the replacement policy, for a total of $O(\lceil n/B \rceil + n + \lceil n/B \rceil) = O(n)$ I/O's.
 	\item
+If we change the way $Y$ is stored we can access it in $\lceil n/B \rceil$ I/O's as well for an improved total of $O(3 * \lceil n/B \rceil) = O(\lceil n/B \rceil)$ I/O's.
 	\item
 	\item
 \end{enumerate}
