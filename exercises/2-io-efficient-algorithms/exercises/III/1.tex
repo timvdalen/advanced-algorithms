@@ -1,4 +1,9 @@
 \begin{enumerate}[(i)]
-	\item
-	\item
+	\item The minimum number of I/O's needed for a root-to-leaf traversal is $\frac{\log_2{n}}{B}$ for the left-most leaf, since we will traverse $\log_2{n}$ nodes which will be in-order on disk.
+		In the worst case, where we traverse the tree to the right-most leaf, we need a new block for each node that we want to load. Since the tree has a depth of $\log_2{n}$, this means we need $\log_2{n}$ I/O's.
+	\item Instead of storing the nodes in travelsal-order, we form blocks of subtrees of $\Theta(B)$ nodes. The height of these substrees is $\log_2{B}$.
+		Then, going through the entire tree (still of height $\log_2{n}$) to a leaf can be done in $O(\frac{\log_2{n}}{\log_2{B}}) = O(\log_B{n})$.
+		In B-trees, each node has $\Theta(B)$ children, with all leafs at the same level.
+		Our blocking structure can be seen as an 'implementation' of a B-tree, since we load subtrees of $\Theta(B)$ nodes (which have $\Theta(B)$ children) into main memory at the same time.
+		We can relate each of our subtrees to one node in a B-tree.
 \end{enumerate}
