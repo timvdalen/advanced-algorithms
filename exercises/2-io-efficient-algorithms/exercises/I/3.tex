@@ -22,6 +22,7 @@
 
 		Due to the way we store the data, we lose the advantage of the last block (which is of course nothing compared to the improvement we made).
 		Thus, the I/O complexity is $O(\frac{\log_2{n}}{\log_2{B}})$.
-	\item \paragraph{Spatial locality} is improved. Since all middle values are closer together now, it is much more likely that the next value that we need is close.
-		\paragraph{Temporal locality} is unaffected. An item in binary search will never be used twice.
+	\item \textbf{Spatial locality} is improved. Since all middle values are closer together now, it is much more likely that the next value that we need is close.
+
+		\textbf{Temporal locality} is unaffected. An item in binary search will never be used twice.
 \end{enumerate}
