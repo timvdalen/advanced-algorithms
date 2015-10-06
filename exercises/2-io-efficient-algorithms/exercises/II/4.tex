@@ -1,0 +1,15 @@
+Consider a permutation algorithm that uses additional external memory blocks while operating on array A.
+Since the algorithm is a permutation algorithm, we know that any data that is stored in the external memory, is stored there temporarily.
+After the algorithm finishes, all data will be in array A.
+
+Consider a write operation that the algorithm performs on an additional external memory block $\mathcal{B}$.
+The algorithm takes the data item $d$ from main memory and puts it in $\mathcal{B}$.
+Apparently, the algorithm can not place the item in its final position yet.
+
+We now make the following change to the algorithm.
+For each such a write operation, instead of writing to $\mathcal{B}$, we write it to the first available position in $A$.
+Due to the definition of $A$ and the fact that we have an item $d$ comining from main memory, there must be an available position.
+Now, the algorithm will need to do two more I/O's for this item when it can be processed: it needs to read it in, and write it to its final position.
+
+By making this change, we now satisfy the assumption, since no items are written to an external block outside of $A$ anymore.
+We have increased the number of I/Os by a factor 3, but because this factor is a constant, the bound of $\Theta(\textsc{Sort}(n))$ still holds.
