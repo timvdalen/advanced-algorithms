@@ -1,6 +1,6 @@
 \begin{enumerate}[(i)]
 	\item
-This simple matrix-multiplication algorithm reads each element from $X$ row-by-row $m$ times, each element from $Y$ collumn-by-collumn $m$ times and writes a result once to each field in $Z$ row-by-row. We require $\lceil n/B \rceil$ I/O's for accessing all elements in either of the row-by-row matrices once and $n$ for reading all elements in the collumn-by-collumn matrix once using \textsc{LRU} as the replacement policy. In total we need $O(m * \lceil n/B \rceil + m * n + \lceil n/B \rceil) = O(m * n) = O(n\sqrt{n})$ I/O's.
+This simple matrix-multiplication algorithm reads each element from $X$ row-by-row $m$ times, each element from $Y$ column-by-column $m$ times and writes a result once to each field in $Z$ row-by-row. We require $\lceil n/B \rceil$ I/O's for accessing all elements in either of the row-by-row matrices once and $n$ for reading all elements in the column-by-column matrix once using \textsc{LRU} as the replacement policy. In total we need $O(m * \lceil n/B \rceil + m * n + \lceil n/B \rceil) = O(m * n) = O(n\sqrt{n})$ I/O's.
 	\item
 If we change the way $Y$ is stored we can access all it's values once in $\lceil n/B \rceil$ I/O's as well for an improved total of $O(2 * m * \lceil n/B \rceil +  \lceil n/B \rceil) = O(\lceil n\sqrt{n}/B \rceil)$ I/O's.
 	\item

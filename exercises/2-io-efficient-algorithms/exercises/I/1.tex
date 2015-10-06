@@ -1,6 +1,6 @@
 \begin{enumerate}[(i)]
 	\item
-There are $m$ collumns to traverse. While processing each collumn $M/B$ blocks can remain in main memory, that is all but one of the blocks in one collumn. Meaning that per collumn there is only one I/O required in addition to the number of blocks in which the matrix is stored $n/B$. Therefor we would need $O(n/B + m) = O(n/B + \sqrt(n))$ I/O's if we use Most-Recently-Used as our replacement policy. This works because the block that was most recently-used will be needed again at the latest time of all the blocks in memory at any time.
+There are $m$ columns to traverse. While processing each column $M/B$ blocks can remain in main memory, that is all but one of the blocks in one column. Meaning that per column there is only one I/O required in addition to the number of blocks in which the matrix is stored $n/B$. Therefore we would need $O(n/B + m) = O(n/B + \sqrt(n))$ I/O's if we use Most-Recently-Used as our replacement policy. This works because the block that was most recently-used will be needed again at the latest time of all the blocks in memory at any time.
 
 	\item
 After $M/B$ blocks have been put into main memory there will be the need to read $m - M/B$ other blocks before any of the first blocks are required. This clarifies that we could keep $M/B-1$ common blocks loaded for each $m/B$ rows but this would lead to an insignificant improvement. We would need $\Omega(m * (m - \frac{M/B-1}{m/B}))$ I/O's. 
