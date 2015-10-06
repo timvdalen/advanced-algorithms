@@ -1,11 +1,11 @@
-if we sort the sequence of operations stable by value $x_i$ we can obtain a list $L$ where all operations that affect the result of a search operation (insertions and deletions) are grouped with that search operation. We can report whether a number $x_i$ is present in $S$ at the time of the search by running the following algorithm on the sorted list.
+If we sort the sequence of operations by value $x_i$, using a stable sorting algorithm, we can obtain a list $L$ where all operations that affect the result of a search operation (insertions and deletions) are grouped with that search operation. We can report whether a number $x_i$ is present in $S$ at the time of the search by running the following algorithm on the sorted list.
 \begin{sourcecode}
 \algorithm{ReportSearches($L$)}
 currentX = null;
 \for{$(type_i, x_i) \in L$}
 	\qif{$\text{currentX} <> x_i$}
 		currentX = $x_i$
-		c = 0;
+		c = 0
 	|
 	\qif{$type_i == \textit{Search}$}
 		\qif{$c > 0$}
@@ -14,9 +14,9 @@ currentX = null;
 			\textbf{print} $x_i$ is not present in $S$ at the time of \textit{Search} $i$
 		|
 	\qelse \qif{$type_i == \textit{Insert}$}
-		c++;
+		c = c + 1
 	\qelse \qif{$type_i == \textit{Delete}$}
-		c--; 
+		c = c - 1
 	|
 |
 \qend
