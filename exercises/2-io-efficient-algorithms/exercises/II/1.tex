@@ -1,0 +1,49 @@
+We will compare the I/O performance of optimal caching and LRU on a machine with memory $M$ to the I/O performance of optimal caching on a machine with memory $M' = M/2$.
+
+We define \textsc{Alg\_Min} to be the the algorithm running with an optimal caching strategy.
+We define \textsc{Alg\_Lru} to be the the algorithm running with LRU.
+
+We know that running \textsc{Alg\_Min} on the machine with memory $M$ takes $cn\sqrt{n}/(MB)$ I/O's.
+Running \textsc{Alg\_Min} on the machine with memory $M'$ will double the amount of I/O's, to $2cn\sqrt{n}/(MB)$.
+Running \textsc{Alg\_Lru} on the with memory $M$ takes $c'n\sqrt{n}/(MB)$.
+
+The LRU replacement policy evicts the memory block that was used the longest ago by the algorithm.
+
+\begin{figure}[H]
+	\centering
+	\def\svgwidth{0.8\textwidth}
+	\input{exercises/II/1-line.pdf_tex}
+	\caption{Timeline of block reads}
+	\label{fig:ii:1:timeline}
+\end{figure}
+
+Consider the timeline in Figure~\ref{fig:ii:1:timeline}.
+The total run of the algorithm is divided up into periods of time $T_i$, each having $M/B$ block reads, except for the first one, which can have less.
+
+\begin{itemize}
+	\item \# of I/O's of \textsc{Alg\_Min} during $T_0$ = \# of I/O's of \textsc{Alg\_Lru} during $T_0$, since everything needs to be read into memory
+	\item Consider $T_i$ for $i > 0$.\\
+		\textbf{Claim} \textsc{Alg\_Min} does $\geq \frac{M}{B} - \frac{M'}{B} + 1$ I/O's.\\
+		\[
+			\frac{\textsc{Alg\_Lru} \textnormal{ during } T_i}{\textsc{Alg\_Min} \textnormal{ during } T_i} \leq \frac{M/B}{\frac{M}{B} - \frac{M'}{B} + 1} = \frac{M}{M-M'+B}
+		\]
+		\textbf{Define} b = block that is used just before $T_i$ starts\\
+		\textbf{Proof}
+			\begin{description}
+				\item[Case 1] $b$ is evicted by LRU during $T_i$.
+					At the start of $T_i$, MIN can only load $M'/B$ in internal memory, it needs $\frac{M}{B} - (\frac{M'}{B} - 1)$
+				\item[Case 2] Some $b' \not= b$ is evicted twice by LRU during $T_i$.
+					Same argument for $b'$.
+				\item[Case 3] No blocks are evicted twice.
+					All reads on a different block, so MIN needs $\frac{M}{B} - (\frac{M'}{B} - 1)$.
+			\end{description}
+\end{itemize}
+
+So we know that:
+
+\begin{align*}
+	LRU(ALG, M) &\leq \frac{M}{M-M'+B} MIN(ALG, M')\\
+	LRU &\leq 2 MIN
+\end{align*}
+
+Thus, we can now say that $\frac{c'}{c} = 2$, or $c' = 2c$.
