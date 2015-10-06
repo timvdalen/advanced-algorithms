@@ -1,11 +1,25 @@
 \begin{enumerate}[(i)]
 	\item
-This simple matrix-multiplication algorithm reads each element from $X$ row-by-row $m$ times, each element from $Y$ column-by-column $m$ times and writes a result once to each field in $Z$ row-by-row. We require $\lceil n/B \rceil$ I/O's for accessing all elements in either of the row-by-row matrices once and $n$ for reading all elements in the column-by-column matrix once using \textsc{LRU} as the replacement policy. In total we need $O(m * \lceil n/B \rceil + m * n + \lceil n/B \rceil) = O(m * n) = O(n\sqrt{n})$ I/O's.
+This simple matrix-multiplication algorithm reads each element from $X$ row-by-row $m$ times, each element from $Y$ column-by-column $m$ times and writes a result once to each field in $Z$ row-by-row. We require $\lceil n/B \rceil$ I/Os for accessing all elements in either of the row-by-row matrices once and $n$ for reading all elements in the column-by-column matrix once using \textsc{LRU} as the replacement policy. In total we need $O(m * \lceil n/B \rceil + m * n + \lceil n/B \rceil) = O(m * n) = O(n\sqrt{n})$ I/Os.
 	\item
-If we change the way $Y$ is stored we can access all it's values once in $\lceil n/B \rceil$ I/O's as well for an improved total of $O(2 * m * \lceil n/B \rceil +  \lceil n/B \rceil) = O(\lceil n\sqrt{n}/B \rceil)$ I/O's.
+If we change the way $Y$ is stored we can access all it's values once in $\lceil n/B \rceil$ I/Os as well for an improved total of $O(2 * m * \lceil n/B \rceil +  \lceil n/B \rceil) = O(\lceil n\sqrt{n}/B \rceil)$ I/Os.
 	\item
+If a subproblem contains 0 values, it's result is 0. Once any subproblem reaches size 1 by 1, it's result will be a 1 by 1 result matrix with the product of the single values. There are $8^{\log_4{n}} = m^3$ of these base subproblems, i.e. $m$ multiplications for each of the $n = m^2$ cells. 
+
+Let $T(n)$ denote the number of I/Os required to compute the product of two matrices with $n$ values.
+Since we require no calculation when the matrices contain no values $T(0) = 0$.
+When the product to be computed contains a single value we require two read operations and a write to store the subresult. We can however assume that there is an optimal replacement strategy employed, therefore $T(1) = 3/B = O(1/B)$.
+The I/Os required to compute the product of two matrices with $n$ values are as follows.
+\begin{equation}
+\begin{split}
+T(0) &= 0\\
+T(1) &= O(1/B)\\
+T(n) &= 8*T(n/4) + O(n/B)\\
+\end{split}
+\end{equation}
+Since m is a power of two, all subdivided matrices are square, all four quadrants in a subdivision will have the same size and will contain one fourth of the values. This also ensures a simplified definition of $T(n)$ and the fact that T(1) is the only base case we need to consider. To compute the product of two $m$ by $m$ matrices we need $\sum_{i=0}^{\log_4{n}} (8^i * O((4^i)/B)) + m^3 * O(1/B)) = O((32^{\log_4(4m^2)}-1)/31B + m^3/B) = O((32m^5/31B + m^3/B) = O(m^5/B) = O(n^2\sqrt{n}/B)$ I/Os since each recursive call produces 8 multiplication subproblems. This is a factor $n$ worse in terms of I/O efficiency when compared to the approach suggested in ii.
 
 	\item The locality is affected as follows
-\paragraph{Spatial locality} is improved due to the optimal replacement policy and the fact that we can control how to order our intermediate results.
+\paragraph{Spatial locality} is improved due to the ordered approach in which a small section of the matrix is processed completely before moving on.
 \paragraph{Temporal locality} is worse due to blocks containing elements from different subproblems, a square area of at least size $B$ by $B$ will be processed before all the blocks' elements are taken care of.
 \end{enumerate}
