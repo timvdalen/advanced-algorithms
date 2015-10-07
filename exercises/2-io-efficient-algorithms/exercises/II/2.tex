@@ -18,4 +18,16 @@ We insert all values we want to merge in the queue and then just keep extracting
 Because of the recursion, we can efficiently insert the sorted sub-arrays into the queue.
 This means that, in total, we will use an extra $O(Sort(n))$ I/O's, but we will still be in the $O(Sort(n))$ bound.
 
-The merge step can now be performed in $O(n \log{n})$, which means that the total running time of the algorithm is, as the original, $O(n \log{n})$.
+The merge step can now be performed in $O(n \log{k})$, which means that the total running time of the algorithm is, as the original, $O(n \log{n})$.
+\begin{equation}
+\begin{split}
+T(0) &= O(1)\\
+T(1) &= O(1)\\
+T(n) &= k * T(n/k) + O(n \log{k})\\
+&= \sum_{i = 0}^{\log_k{n}} (k^i * O(\frac{n}{k^i} * \log{k})) + O(n)\\
+&= O((\log_k{n} + 1) * n \log{k})+ O(n)\\
+&= O(\log_k{n} * n \log{k} + n \log{k}) + O(n)\\
+&= O(n \log{n} + n \log{k}) + O(n)\\
+&= O(n \log{n})
+\end{split}
+\end{equation}
