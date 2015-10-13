@@ -17,7 +17,7 @@ T(1) &= O(1/B)\\
 T(n) &= 8*T(n/4) + O(n/B)\\
 \end{split}
 \end{equation}
-Since m is a power of two, all subdivided matrices are square, all four quadrants in a subdivision will have the same size and will contain one fourth of the values. This also ensures a simplified definition of $T(n)$ and the fact that T(1) is the only base case we need to consider. To compute the product of two $m$ by $m$ matrices we need $\sum_{i=0}^{\log_4{n}} (8^i * O((4^i)/B)) + m^3 * O(1/B)) = O((32^{\log_4(4m^2)}-1)/31B + m^3/B) = O((32m^5/31B + m^3/B) = O(m^5/B) = O(n^2\sqrt{n}/B)$ I/Os since each recursive call produces 8 multiplication subproblems. This is a factor $n$ worse in terms of I/O efficiency when compared to the approach suggested in ii.
+Since m is a power of two, all subdivided matrices are square, all four quadrants in a subdivision will have the same size and will contain one fourth of the values. This also ensures a simplified definition of $T(n)$ and the fact that T(1) is the only base case we need to consider. To compute the product of two $m$ by $m$ matrices we need $\sum_{i=0}^{\log_4{n}-1} (8^i * O((4^i)/B)) + m^3 * O(1/B)) = O((32^{\log_4(m^2)})/31B + m^3/B) = O((m^5/31B + m^3/B) = O(m^5/B) = O(n^2\sqrt{n}/B)$ I/Os since each recursive call produces 8 multiplication subproblems. This is a factor $n$ worse in terms of I/O efficiency when compared to the approach suggested in ii.
 
 	\item The locality is affected as follows
 \paragraph{Spatial locality} is improved due to the ordered approach in which a small section of the matrix is processed completely before moving on.

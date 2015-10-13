@@ -1,0 +1,33 @@
+Let $T(n)$ denote the time required to run \textsc{EM-MergeSort} on an array of length $n$.
+\begin{equation}
+\begin{split}
+T(0) &= O(1)\\
+T(1) &= O(1)\\
+T(n) &= k * T(n/k) + O(k n)\\
+&= \sum_{i = 0}^{\log_k{n}} (k^i * O(k * \frac{n}{k^i})) + O(n)\\
+&= O((\log_k{n} + 1) *  k n)+ O(n)\\
+&= O(k n \log_k{(k n)}) + O(n)\\
+&= O(k n \log_k{(k n)})\\
+\end{split}
+\end{equation}
+
+Thus, it's clear that due to the fact that the merge step takes $O(k n)$ time, the algorithm does not run in $O(n \log{n})$.
+
+We can make the merge step run faster by using a min-priority queue.
+We insert all values we want to merge in the queue and then just keep extracting values to get them back sorted.
+Because of the recursion, we can efficiently insert the sorted sub-arrays into the queue.
+This means that, in total, we will use an extra $O(Sort(n))$ I/O's, but we will still be in the $O(Sort(n))$ bound.
+
+The merge step can now be performed in $O(n \log{k})$, which means that the total running time of the algorithm is, as the original, $O(n \log{n})$.
+\begin{equation}
+\begin{split}
+T(0) &= O(1)\\
+T(1) &= O(1)\\
+T(n) &= k * T(n/k) + O(n \log{k})\\
+&= \sum_{i = 0}^{\log_k{n}} (k^i * O(\frac{n}{k^i} * \log{k})) + O(n)\\
+&= O((\log_k{n} + 1) * n \log{k})+ O(n)\\
+&= O(\log_k{n} * n \log{k} + n \log{k}) + O(n)\\
+&= O(n \log{n} + n \log{k}) + O(n)\\
+&= O(n \log{n})
+\end{split}
+\end{equation}
