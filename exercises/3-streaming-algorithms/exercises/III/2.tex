@@ -1,0 +1,24 @@
+Note that because $t = 1$ we only run the algorithm once on the stream, which means that we are not using the median trick.
+Since $k = 10$, our hash function maps to 10 different bins.
+
+This means we can easily get high errors for low-frequency items if we have a very skewed distribution.
+
+Specifically, imagine a stream $\sigma$ of length $m$ where one item has a frequency of $\frac{m}{2} + 1$.
+All other items in the stream have a frequency of 1.
+
+Now, if the stream is large enough, any item that ends up in the same bin as the majority item will be over-estimated by more than $\frac{m}{2}$.
+Specifically, for 10 bins, we can find an $m$ for which there is a probability of $> 0.99$ that an item ends up in the same bin as the majority item as follows:
+
+The only way no item will be over-estimated by at least $\frac{m}{2}$ is if all non-majority items ($\frac{m}{2} - 1$ distinct items) end up in a different bin than the majority item.
+We want this probability to be $\leq 0.01$.
+
+Since the hash function is uniform, the probabilty for each item to end up in one of the 9 other bins is 0.9.
+So, for $\frac{m}{2} - 1$ items all to end up in one of those bins with a probablity of $\leq 0.01$:
+
+\]
+	0.9^{\frac{m}{2}-1} &\leq 0.01\\
+\]
+
+Which works out to around $m \geq 90$.
+
+Thus, the above stream $\sigma$ has a very high probability of having an item for which the estimate of its frequency is much larger than its actual frequency, as long as $m$ is at least 90.
