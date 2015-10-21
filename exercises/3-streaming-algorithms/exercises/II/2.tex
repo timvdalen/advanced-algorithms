@@ -1,0 +1,41 @@
+In the original algorithm, we use the fact that we know $m$ up front, to pick proper indices for $r$.
+Now that we can no longer assume that we know $m$, we need to modify the algorithm to still pick incides that result in the same approximation ratio with the same probability.
+
+We do this as follows:
+Our multiset $J$ is initialized with $k$ empty values.
+We keep a counter of the stream length so far (below, we will assume that when we process $a_i$, we can just use $i$ as the counter) and on every item we process, we replace each element of our multiset $J$ by it with probability $\frac{1}{i}$.
+
+This results in the algorithm shown below:
+\begin{sourcecode}
+\event{Input}
+A stream $\left<a_1, \ldots, a_m\right>$ with distinct items in the vanilla model.
+\qend
+
+\event{Initialize}
+$k = \ceil*{8 \log{\frac{2}{\delta}}}$
+$J$ is a multiset with $k$ items
+\qend
+
+\event{Process($a_i$)}
+\for{each item $j \in J$}
+	$j = a_i$ with probabilty $\frac{1}{i}$
+|
+\qend
+
+\event{Output}
+\return the median of the set $J$
+\qend
+\end{sourcecode}
+
+To prove that this algorithm indeed gives a (1/4)-approximation median with a probability of at least $1-\delta$, we will use induction.
+
+\textbf{Base:} if $i = 1$, the algorithm will swap all items of $J$ for $a_1$ (since $\frac{1}{i} = 1$). Now, $J$ is a uniform distribution distribution over the stream.
+
+\textbf{Step:} if $i > 1$, we know that for the stream up to the latest item, $J$ is a uniform distribution over the stream (thus, all items have a probability $\frac{1}{i-1}$ to be in $J$).
+The algorithm now replaces each item in $J$ by $a_i$ with probability $\frac{1}{i}$.
+After this is done, all items in the stream have a probability of $(\frac{1}{i-1}) (1-\frac{1}{i}) = \frac{1}{i}$ to be in $J$.
+Thus, after the step $J$ is a uniform distribution of the stream.
+
+We have shown that $J$ is a uniform distribution over the stream, for any $i$.
+This means that we have achieved the same randomness as the algorithm in the course notes did.
+Thus, we can use the same proof to conclude that the algorithm produces a (1/4)-approximate median with a probability of at least $1 - \delta$.
