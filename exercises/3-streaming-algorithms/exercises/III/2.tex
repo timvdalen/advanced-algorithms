@@ -15,8 +15,10 @@ We want this probability to be $\leq 0.01$.
 Since the hash function is uniform, the probabilty for each item to end up in one of the 9 other bins is 0.9.
 So, for $\frac{m}{2} - 1$ items all to end up in one of those bins with a probablity of $\leq 0.01$:
 
-\]
+\[
+\begin{split}
 	0.9^{\frac{m}{2}-1} &\leq 0.01\\
+\end{split}
 \]
 
 Which works out to around $m \geq 90$.
