@@ -12,34 +12,34 @@ A stream $<a_1, \ldots , a_m>$ from universe $[n]$ in the vanilla model.
 
 \event{pass 1 - Initialize}
 Pick $k$ indices $r_1, \ldots , r_k$ independently and uniformly at random from $\{1, \ldots , m\}$.
-Set $R \leftarrow \{r_1, \ldots , r_k\}$ and $J \leftarrow \emptyset$ where $R$ and $J$ are considered multisets.
-$\textit{min} \leftarrow n$
-$\textit{max} \leftarrow 0$
+Set $R = \{r_1, \ldots , r_k\}$ and $J = \emptyset$ where $R$ and $J$ are considered multisets.
+$\textit{min} = n$
+$\textit{max} = 0$
 \silend
 
 \event{pass 1 - Process$(a_i)$}
 \qif{$i \in R$} 
-	$J \leftarrow J \cup \{a_i\}$
+	$J = J \cup \{a_i\}$
 |
 \qif($a_i < \textit{min}$)
-	$\textit{min} \leftarrow a_i$
+	$\textit{min} = a_i$
 |
 \qif($a_i > \textit{max}$)
-	$\textit{max} \leftarrow a_i$
+	$\textit{max} = a_i$
 |
 \silend
 
 \event{pass 2 - Initialize}
-$J \leftarrow J \cup \{min, max\}$
+$J = J \cup \{min, max\}$
 \for{$x \in J$}
-	$\textit{rank}(x) \leftarrow 1$
+	$\textit{rank}(x) = 1$
 |
 \silend
 
 \event{pass 2 - Process$(a_i)$}
 \for{$x \in J$} 
 	\qif{$a_i < b$}
-		$\textit{rank}(a_i) \leftarrow \textit{rank}(a_i) + 1$
+		$\textit{rank}(a_i) = \textit{rank}(a_i) + 1$
 	|
 |
 \silend
@@ -47,12 +47,12 @@ $J \leftarrow J \cup \{min, max\}$
 \event{pass 3 - Initialize}
 Determine which of the elements in $J$ can serve as a lower bound $l$ for the median, this element should be closest to but lesser than or equal to $\lfloor (m+1)/2 \rfloor$.
 Determine which of the elements in $J$ can serve as a upper bound $u$ for the median, this element should be closest to but greater than or equal to $\lceil (m+1)/2 \rceil$.
-$O \leftarrow \emptyset$
+$O = \emptyset$
 \silend
 
 \event{pass 3 - Process$(a_i)$}
 \qif{$l \leq a_i \leq u$}
-	$O \leftarrow O \cup \{a_i\}$
+	$O = O \cup \{a_i\}$
 |
 \silend
 

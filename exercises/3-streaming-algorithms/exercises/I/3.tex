@@ -8,18 +8,18 @@ A stream $<(a_1, x_1), \ldots , (a_m, x_m)>$ in the vanilla model.
 \silend
 
 \event{Initialize}
-$I \leftarrow \emptyset$
+$I = \emptyset$
 \silend
 
 \event{Process$(a_i, x_i)$}
 \qif{$a_i \in I$} 
-	$c(a_i) \leftarrow c(a_i) + x_i$
+	$c(a_i) = c(a_i) + x_i$
 \qelse
 	Insert $a_i$ into $I$ with counter $c(a_i) = x_i$
 	\qif{$|I| \geq 1/\epsilon$}
 		Determine the minimum counter value $c_{\textit{min}}$ by looping over $I$
 		\for{$j \in I$}
-			$c(j) \leftarrow c(j) - c_{\textit{min}}$
+			$c(j) = c(j) - c_{\textit{min}}$
 			delete $j$ from $I$ when $c(j) = 0$ \comment{This will include $a_{\textit{min}}$}
 		|
 	|			
