@@ -7,20 +7,21 @@ We keep a counter of the stream length so far (below, we will assume that when w
 
 This results in the algorithm shown below:
 \begin{sourcecode}
+\streaming{MedianUnknownLength}
 \event{Input}
 A stream $\left<a_1, \ldots, a_m\right>$ with distinct items in the vanilla model.
-\qend
+\silend
 
 \event{Initialize}
 $k = \ceil*{8 \log{\frac{2}{\delta}}}$
 $J$ is a multiset with $k$ items
-\qend
+\silend
 
 \event{Process($a_i$)}
 \for{each item $j \in J$}
 	$j = a_i$ with probabilty $\frac{1}{i}$
 |
-\qend
+\silend
 
 \event{Output}
 \return the median of the set $J$
