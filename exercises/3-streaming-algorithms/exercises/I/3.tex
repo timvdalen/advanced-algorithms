@@ -1,12 +1,17 @@
 The Algorithm from the course notes can be adapted to work in the cash-register model as follows.
 
-\paragraph{Input:} 
-	A stream $<(a_1, x_1), \ldots , (a_m, x_m)>$ in the vanilla model.
-\paragraph{Initialize:}
-	$I \leftarrow \emptyset$
-\paragraph{Process($(a_i, x_i)$):}
 \begin{minipage}[t]{\textwidth}
-\begin{sourcecode} 
+\begin{sourcecode}
+\streaming{FrequentItemsCashRegister}
+\event{Input}
+A stream $<(a_1, x_1), \ldots , (a_m, x_m)>$ in the vanilla model.
+\silend
+
+\event{Initialize}
+$I \leftarrow \emptyset$
+\silend
+
+\event{Process$(a_i, x_i)$}
 \qif{$a_i \in I$} 
 	$c(a_i) \leftarrow c(a_i) + x_i$
 \qelse
@@ -19,9 +24,12 @@ The Algorithm from the course notes can be adapted to work in the cash-register 
 		|
 	|			
 |
+\silend
+
+\event{Output}
+Report $I$
+\silend
 \end{sourcecode}
 \end{minipage}
-\paragraph{Output:}
-	Report $I$
 
-When item $a_i$ arrives either the counter are increased with $x_i$ or it is inserted with initial value $x_i$. When this list of candidates becomes too large we will want to remove an item. Previously decreasing the counters by $1$ was sufficient because the item that caused the increase in the size of the candidate list had an initial counter value of $1$ and would be removed, possibly along with other items whose counters were decreased by previously encountered items. By decreasing the counters with the minimum counter value we can still maintain the candidate list size and preserve the relative counters of the frequent item candidates.
+\paragraph{} When item $a_i$ arrives either the counter are increased with $x_i$ or it is inserted with initial value $x_i$. When this list of candidates becomes too large we will want to remove an item. Previously decreasing the counters by $1$ was sufficient because the item that caused the increase in the size of the candidate list had an initial counter value of $1$ and would be removed, possibly along with other items whose counters were decreased by previously encountered items. By decreasing the counters with the minimum counter value we can still maintain the candidate list size and preserve the relative counters of the frequent item candidates.

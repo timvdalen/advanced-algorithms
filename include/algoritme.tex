@@ -6,6 +6,7 @@
 \newenvironment{sourcecode}{\begingroup%
 \setcounter{linenumber}{0}%
 \def\algorithm##1{\setcounter{linenumber}{0}\medskip \textbf{Algorithm} \textsc{##1} \parskip=0pt\everypar={\parskip=0pt\stepcounter{linenumber}\rlap{\scriptsize{\thelinenumber}}\qquad}}%
+\def\streaming##1{\medskip \textbf{Algorithm} \textsc{##1} \parskip=0pt}%
 \def\event##1{\setcounter{linenumber}{0}\medskip \textbf{##1:} \parskip=0pt\everypar={\parskip=0pt\stepcounter{linenumber}\rlap{\scriptsize{\thelinenumber}}\qquad}}%
 %
 \def\comment##1{\textit{//##1}}%
@@ -25,6 +26,7 @@
 \def\qreceive##1{\textbf{receive} \emph{##1}}%
 \def\qbegin{\textbf{begin}}
 \def\qend{\everypar={}\textbf{end}}
+\def\silend{\everypar={}}
 \def\runningtime##1{\hfill ##1}
 \catcode`\^^I=13%
 \catcode`\^^M=13%
