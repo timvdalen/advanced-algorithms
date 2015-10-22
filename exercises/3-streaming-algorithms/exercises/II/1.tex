@@ -33,6 +33,41 @@ Since we want the probability to be less than $\frac{1}{6}$ we should set $t$ to
 \sqrt{6} * \frac{1}{\sqrt{\frac{1}{3} * \Phi(\sigma)}} * \frac{1}{3} &< 1 \\
 \end{split}
 \]
-We can conclude that there exists a $c$ with $0 < c < 1$ for which the probability $\text{Pr}[|\tilde{\Phi}(\sigma) - \Phi(\sigma)| \geq c * \Phi(\sigma)]$ is less or equal to $\frac{1}{6}$.
+We can conclude that there exists a $c$ for which $0 < c < 1$ holds and for which the probability $\text{Pr}[|\tilde{\Phi}(\sigma) - \Phi(\sigma)| \geq c * \Phi(\sigma)]$ is less or equal to $\frac{1}{6}$.
 	\item
+By running \textsc{Alg} in $k$ times in parallel and taking the median of the results as $\hat{\Phi}(\sigma)$ we can obtain a probability equal to $1-\delta$.
+We define random variables $X_i$ and $Y_i$ for each parallel outcome $i\in \{1, \ldots , k\}$. In addition we define $X$ to be $\sum^k_{i=1}X_i$ and $Y$ to be $\sum^k_{i=1}Y_i$
+\[
+\begin{split}
+X_i &= 
+\begin{cases}
+1 & \text{if $\tilde{\Phi}_i(\sigma) < (1-c) * \Phi(\sigma)$}\\
+0 & \text{otherwise}
+\end{cases}\\
+Y_i &= 
+\begin{cases}
+1 & \text{if $\tilde{\Phi}_i(\sigma) > (1+c) * \Phi(\sigma)$}\\
+0 & \text{otherwise}
+\end{cases}
+\end{split}
+\]
+The expected values of $X$ and $Y$ are $\text{E}[X] = \text{E}[Y] = k*\frac{1}{6} / 2 = k/12$.
+If either $X_i  = 1$ or $Y_i = 1$ for more than half of the $k$ reported values then the median will not provide sufficiently accurate output.
+The chances $\text{Pr}[|\hat{\Phi}(\sigma) - \Phi(\sigma)| \geq c * \Phi(\sigma)]$ of this happening are calculated as follows.
+\[
+\begin{split}
+\text{Pr}[X > k/2] &= \text{Pr}[X > 6 * k/12]\\
+\text{Pr}[X > k/2] &= \text{Pr}[X > 6 * \text{E}[X]]\\
+\text{Pr}[X > k/2] &< (\frac{e^5}{6^6})^{k/12} \hspace*{20px}\text{Chernoff bound}\\
+\text{Pr}[Y > k/2] &< (\frac{e^5}{6^6})^{k/12} \hspace*{20px}\text{Similarly}\\
+\text{Pr}[|\hat{\Phi}(\sigma) - \Phi(\sigma)| \geq c * \Phi(\sigma)] &= 1 - \text{Pr}[X > k/2] - \text{Pr}[Y > k/2]\\
+\text{Pr}[|\hat{\Phi}(\sigma) - \Phi(\sigma)| \geq c * \Phi(\sigma)] &> 1 - 2 *  (\frac{e^5}{6^6})^{k/12}\\
+\end{split}
+\]
+To achieve the desired probability we need to set to $k$ such that 
+\[
+\begin{split}
+1 - \delta < 1 - 2 *  (\frac{e^5}{6^6})^{k/12}\\
+\end{split}
+\]
 \end{enumerate}
