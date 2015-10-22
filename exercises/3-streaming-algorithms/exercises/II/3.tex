@@ -1,0 +1,56 @@
+\begin{sourcecode}
+\streaming{ThreePassMedian}
+\event{Input}
+A stream $<a_1, \ldots , a_m>$ in the vanilla model.
+\silend
+
+\event{pass 1 - Initialize}
+Pick $k$ indices $r_1, \ldots , r_k$ independently and uniformly at random from $\{1, \ldots , m\}$.
+Set $R \leftarrow \{r_1, \ldots , r_k\}$ and $J \leftarrow \emptyset$ where $R$ and $J$ are considered multisets.
+$\textit{min} \leftarrow \inf$
+$\textit{max} \leftarrow 0$
+\silend
+
+\event{pass 1 - Process$(a_i)$}
+\qif{$i \in R$} 
+	$J \leftarrow J \cup \{a_i\}$
+|
+\qif($a_i < \textit{min}$)
+	$\textit{min} \leftarrow a_i$
+|
+\qif($a_i > \textit{max}$)
+	$\textit{max} \leftarrow a_i$
+|
+\silend
+
+\event{pass 2 - Initialize}
+$J \leftarrow \cup \{min, max\}$
+\for{$x \in J$}
+	$\textit{rank}(x) \leftarrow 1$
+|
+\silend
+
+\event{pass 2 - Process$(a_i)$}
+\for{$x \in J$} 
+	\qif{$a_i < b$}
+		$\textit{rank}(a_i) \leftarrow \textit{rank}(a_i) + 1$
+	|
+|
+\silend
+
+\event{pass 3 - Initialize}
+Determine which of the elements in $J$ can serve as a lower bound $l$ for the median, this element should be closest to but lesser than or equal to $\lfloor (m+1)/2 \rfloor$.
+Determine which of the elements in $J$ can serve as a upper bound $u$ for the median, this element should be closest to but greater than or equal to $\lceil (m+1)/2 \rceil$.
+$O \leftarrow \emptyset$
+\silend
+
+\event{pass 3 - Process$(a_i)$}
+\qif{$l \leq a_i \leq u$}
+	$O \leftarrow O \cup \{a_i\}$
+|
+\silend
+
+\event{Output}
+Report the median of the stream from set $O$ by using the \textit{rank} of $l$ or $u$.
+\qend
+\end{sourcecode}
