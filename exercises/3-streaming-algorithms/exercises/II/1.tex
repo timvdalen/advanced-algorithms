@@ -68,6 +68,10 @@ To achieve the desired probability we need to set to $k$ such that
 \[
 \begin{split}
 1 - \delta < 1 - 2 *  (\frac{e^5}{6^6})^{k/12}\\
+\delta/2 < (\frac{e^5}{6^6})^{k/12}\\
+k > 12 * \log_{\frac{e^5}{6^6}}{\delta/2}
 \end{split}
 \]
+By using $k = \lceil 12 * \log_{\frac{e^5}{6^6}}{\delta/2} \rceil$ parallel runs of \textsc{Alg} and outputting the median we can achieve $\text{Pr}[|\hat{\Phi}(\sigma) - \Phi(\sigma)| \geq c * \Phi(\sigma)] > 1 - \delta$.
+In the end the streaming algorithm simply uses $k * B(n,m)$ bits of storage for the parallel runs of \textsc{Alg} in addition to the $O(k \log{n})$ bits of storage for the results of each of the intermediate results.
 \end{enumerate}
