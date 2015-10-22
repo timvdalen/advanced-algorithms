@@ -7,13 +7,13 @@ The third pass simply stores all elements within this range in a set $O$, then i
 \begin{sourcecode}
 \streaming{ThreePassMedian}
 \event{Input}
-A stream $<a_1, \ldots , a_m>$ in the vanilla model.
+A stream $<a_1, \ldots , a_m>$ from universe $[n]$ in the vanilla model.
 \silend
 
 \event{pass 1 - Initialize}
 Pick $k$ indices $r_1, \ldots , r_k$ independently and uniformly at random from $\{1, \ldots , m\}$.
 Set $R \leftarrow \{r_1, \ldots , r_k\}$ and $J \leftarrow \emptyset$ where $R$ and $J$ are considered multisets.
-$\textit{min} \leftarrow \inf$
+$\textit{min} \leftarrow n$
 $\textit{max} \leftarrow 0$
 \silend
 
@@ -30,7 +30,7 @@ $\textit{max} \leftarrow 0$
 \silend
 
 \event{pass 2 - Initialize}
-$J \leftarrow \cup \{min, max\}$
+$J \leftarrow J \cup \{min, max\}$
 \for{$x \in J$}
 	$\textit{rank}(x) \leftarrow 1$
 |
@@ -63,3 +63,11 @@ Report the median of the stream from set $O$ by using the \textit{rank} of $l$ o
 
 \paragraph{Correctness}
 If we disregard the storage requirement we can easily determine that the algorithm is correct. Once we have the rank of an element $x$ and a number of subsequent elements we can determine the ranks of these subsequent elements. If we know that $\textit{rank}(x) \leq \lfloor (m+1)/2 \rfloor$ and it holds for one of the subsequent elements $y$ that $\textit{rank}(y) \geq \lceil (m+1)/2 \rceil$ then the median must be among these. Since the algorithm takes it's lower and upper bounds from a set which includes the minimum and the maximum, there are allways bounding elements such that the median is contained within the range.
+
+\paragraph{Storage}
+Pass 1 stores two sets with $k$ numbers and two numbers, so $\Theta(k\log_n{n})$ bits.
+
+Pass 2 stores a set with $k+2$ numbers and a rank for $k+2$ items, so again $\Theta(k\log_n{n})$ bits.
+
+In pass 3, the storage size depends on the set $O$.
+The size of set $O$ in turn depends on the randomly chosen indices in pass 1.
