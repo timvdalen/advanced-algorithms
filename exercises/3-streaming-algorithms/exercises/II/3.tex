@@ -1,3 +1,9 @@
+The following algorithm is able to solve \textsc{Median} for a stream exactly in three passes.
+It does so by picking elements in the first pass and ranking these elements in the second pass.
+The third pass can use the ranked elements to find bounds for the actual median of which we know the rank, since it's the middle element.
+Due to the randomly picked elements the bounded range is likely to be relatively small compared to the entire stream.
+The third pass simply stores all elements within this range in a set $O$, then it can calculate the median by using the relative rank in the set and the rank of the bounding elements.
+
 \begin{sourcecode}
 \streaming{ThreePassMedian}
 \event{Input}
@@ -54,3 +60,6 @@ $O \leftarrow \emptyset$
 Report the median of the stream from set $O$ by using the \textit{rank} of $l$ or $u$.
 \qend
 \end{sourcecode}
+
+\paragraph{Correctness}
+If we disregard the storage requirement we can easily determine that the algorithm is correct. Once we have the rank of an element $x$ and a number of subsequent elements we can determine the ranks of these subsequent elements. If we know that $\textit{rank}(x) \leq \lfloor (m+1)/2 \rfloor$ and it holds for one of the subsequent elements $y$ that $\textit{rank}(y) \geq \lceil (m+1)/2 \rceil$ then the median must be among these. Since the algorithm takes it's lower and upper bounds from a set which includes the minimum and the maximum, there are allways bounding elements such that the median is contained within the range.
