@@ -1,0 +1,39 @@
+The algorithm below solves \textsc{Two Missing Items} exactly.
+
+\begin{minipage}{\textwidth}
+\begin{sourcecode}
+\streaming{TwoMissingItems}
+\event{Input}
+A stream $\left<(a_1, x_1), \ldots , (a_m, x_m)\right>$ in the vanilla model.
+\silend
+
+\event{Initialize}
+$sum = 0$
+$sqsum = 0$
+\silend
+
+\event{Process($a_i$)}
+$sum \pluseq a_i$
+$sqsum \pluseq a_i^2$
+\silend
+
+\event{Output}
+Evaluate the following linear system: \begin{align*}j_1 + j_2 &= \sum_{i=1}^n{i} - sum\\ j_1^2 + j_2^2 &= \sum_{i=1}^n{i^2} - sqsum\end{align*}
+Output $j_1$ and $j_2$
+\silend
+\end{sourcecode}
+\end{minipage}
+
+\paragraph{Correctness} The algorithm internally keeps two counters: $sum$ is the sum of all items in the stream, $sqsum$ is the sum of all items in the stream, squared.
+We can see that if we have two missing items, the sum of all items in the universe ($\sum_{i=1}^n{i}$) is equal to the sum of all items in the stream plus the two missing items.
+The same holds for the squared sum, the sum of all items in the universe squared is equal to the sum of all items in the stream squared plus the two missing items squared.
+
+Since we now have a system of two equations with two variables, we can just solve the system to find the missing items $j_1$ and $j_2$.
+
+\paragraph{Storage} The algorithm only stores the two sums.
+We can store summations of numbers in universe $[n]$ in a factor $\log{n}$ bits, so the algorithm uses $\Theta(\log_2{n})$ bits.
+Thus, it uses a sub-linear number of bits.
+
+The algorithm does not use any randomness, so it is deterministic.
+
+Thus, we have shown a deterministic streaming algorithm that solves \textsc{Two Missing Items} exactly using a sub-linear number of bits.
